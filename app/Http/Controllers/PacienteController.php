@@ -39,9 +39,9 @@ class PacienteController extends Controller
 
 public function store(StorePacienteRequest $request)
 {
-    Paciente::create($request->validated());
+    $paciente = Paciente::create($request->validated());
 
-    return redirect()->route('pacientes.index')
+    return redirect()->route('pacientes.show', $paciente)
         ->with('ok', 'Paciente registrado correctamente.');
 }
 
@@ -49,26 +49,28 @@ public function store(StorePacienteRequest $request)
      * Display the specified resource.
      */
     public function show(Paciente $paciente)
-    {
-        //
-    }
+{
+    $citas = $paciente->citas()
+        ->with('personalMedico')
+        ->latest('fecha_hora')
+        ->take(5)
+        ->get();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Paciente $paciente)
-    {
-        //
-    }
+    return view('pacientes.show', compact('paciente', 'citas'));
+}
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdatePacienteRequest $request, Paciente $paciente)
-    {
-        //
-    }
+public function edit(Paciente $paciente)
+{
+    return view('pacientes.edit', compact('paciente'));
+}
 
+public function update(UpdatePacienteRequest $request, Paciente $paciente)
+{
+    $paciente->update($request->validated());
+
+    return redirect()->route('pacientes.show', $paciente)
+        ->with('ok', 'Datos del paciente actualizados.');
+}
     /**
      * Remove the specified resource from storage.
      */
