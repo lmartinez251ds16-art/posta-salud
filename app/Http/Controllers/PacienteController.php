@@ -75,7 +75,15 @@ public function update(UpdatePacienteRequest $request, Paciente $paciente)
      * Remove the specified resource from storage.
      */
     public function destroy(Paciente $paciente)
-    {
-        //
+{
+    if ($paciente->citas()->exists()) {
+        return back()->with('error',
+            'No se puede eliminar: el paciente tiene citas registradas.');
     }
+
+    $paciente->delete();
+
+    return redirect()->route('pacientes.index')
+        ->with('ok', 'Paciente eliminado.');
+}
 }
