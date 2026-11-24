@@ -16,6 +16,10 @@ class PersonalMedico extends Model
         'user_id', 'dni', 'nombres', 'apellidos',
         'especialidad', 'colegiatura', 'activo',
     ];
+    public const ESPECIALIDADES = [
+    'Medicina general', 'Obstetricia', 'Enfermería',
+    'Odontología', 'Pediatría',
+];
     protected function casts(): array
     {
         return ['activo' => 'boolean'];
