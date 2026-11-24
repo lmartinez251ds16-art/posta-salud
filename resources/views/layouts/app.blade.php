@@ -10,6 +10,8 @@
     .aviso-ok    { border-left: 6px solid #2f7d52; }
     .aviso-error { border-left: 6px solid #b3261e; }
     .acciones    { display: flex; gap: 1rem; align-items: center; }
+    .estado-activo   { background: #e6f2ea; color: #2f7d52; }
+    .estado-inactivo { background: #f6e3e3; color: #b3261e; }
 </style>
 
 </head>
